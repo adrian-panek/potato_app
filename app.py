@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 import os
 import sys
 
@@ -20,9 +19,8 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(SCRIPT_DIR, 'data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Setup the Flask-JWT-Extended extension
-# app.config["JWT_SECRET_KEY"] = "Dese.Decent.Pups.BOOYO0OST"  # Change this!
-# jwt = JWTManager(app)
+app.config["JWT_SECRET_KEY"] = "Super.Apka.Do.Zamawiania.Ziemniaczkow.Kocham"
+jwt = JWTManager(app)
 api = Api(app)
 
 
@@ -40,4 +38,4 @@ api.add_resource(Order, '/order/<string:name>')
 api.add_resource(OrderList, '/orders')
 
 if __name__ == '__main__':
-    app.run(debug=True)  # important to mention debug=True
+    app.run(debug=True)  

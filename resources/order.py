@@ -9,13 +9,14 @@ class Order(Resource):
     def __init__(self):
         self.logger = create_logger()
 
-    # def get(self, name):
-    #     Order = OrderModel.find_by_name(name)
-    #     if Order:
-    #         return Order.json()
-    #     return {'message': 'Order not found'}, 404
+    @jwt_required()
+    def get(self, name):
+        Order = OrderModel.find_by_name(name)
+        if Order:
+            return Order.json()
+        return {'message': 'Order not found'}, 404
 
-    #@jwt_required()
+    @jwt_required()
     def post(self, name):
         if OrderModel.find_by_name(name):
             return {'message': "A Order with name '{}' already exists.".format(name)}, 400
@@ -25,18 +26,17 @@ class Order(Resource):
             Order.save_to_db()
         except:
             return {"message": "An error occurred creating the Order."}, 500
-
         return Order.json(), 201
 
-    #@jwt_required()  
+    @jwt_required()
     def delete(self, name):
         Order = OrderModel.find_by_name(name)
         if Order:
             Order.delete_from_db()
-
         return {'message': 'Order deleted'}
 
 
 class OrderList(Resource):
+    @jwt_required()
     def get(self):
         return {'Orders': [Order.json() for Order in OrderModel.query.all()]}
