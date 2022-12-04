@@ -33,9 +33,9 @@ def create_tables():
 api.add_resource(Meal, '/meal/<string:name>')
 api.add_resource(MealList, '/meals')
 api.add_resource(UserRegister, '/register')
-api.add_resource(User, '/user')
+api.add_resource(User, '/login')
 api.add_resource(Order, '/order/<string:name>')
 api.add_resource(OrderList, '/orders')
 
 if __name__ == '__main__':
-    app.run(debug=True)  
+    app.run(host='0.0.0.0', debug=True)  

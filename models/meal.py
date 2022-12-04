@@ -14,19 +14,14 @@ class MealModel(db.Model):
     diary_addons = db.Column(db.String(500))
     protein_addons = db.Column(db.String(500))
 
-    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
-    order = db.relationship('OrderModel')
-
-    def __init__(self, name, price, order_id):
+    def __init__(self, name, price):
         self.name = name
         self.price = price
-        self.order_id = order_id
 
     def json(self):
         return {
             'name': self.name,
             'price': self.price,
-            'order_id': self.order_id,
             'potato_quantity': self.potato_quantity,
             'meal_type': self.meal_type,
             'diary_addons': self.diary_addons,
