@@ -3,8 +3,8 @@
 from db import db
 
 
-class GuestModel(db.Model):
-    __tablename__ = 'guests'
+class ReservationModel(db.Model):
+    __tablename__ = 'reservation'
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))

@@ -14,9 +14,13 @@ class MealModel(db.Model):
     diary_addons = db.Column(db.String(500))
     protein_addons = db.Column(db.String(500))
 
-    def __init__(self, name, price):
+    def __init__(self, name, price, potato_quantity, meal_type, diary_addons, protein_addons):
         self.name = name
         self.price = price
+        self.potato_quantity = potato_quantity
+        self.meal_type = meal_type
+        self.diary_addons = diary_addons
+        self.protein_addons = protein_addons
 
     def json(self):
         return {

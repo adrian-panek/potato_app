@@ -30,6 +30,10 @@ class OrderModel(db.Model):
             'meals': [item.json() for item in self.meals]
         }
 
+    @classmethod
+    def find_by_id(cls, id):
+        return cls.query.filter_by(id=id).first()
+
     def save_to_db(self):
         db.session.add(self)
         db.session.commit()

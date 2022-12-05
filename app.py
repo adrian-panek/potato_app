@@ -11,7 +11,7 @@ sys.path.append(os.path.dirname(SCRIPT_DIR))
 
 from resources.meal import Meal, MealList
 from resources.order import Order, OrderList
-from resources.guest import Guest
+from resources.reservation import Reservation
 from resources.user import UserRegister, User
 
 app = Flask(__name__)
@@ -34,7 +34,7 @@ api.add_resource(Meal, '/meal/<string:name>')
 api.add_resource(MealList, '/meals')
 api.add_resource(UserRegister, '/register')
 api.add_resource(User, '/login')
-api.add_resource(Order, '/order/<string:name>')
+api.add_resource(Order, '/order/<int:id>')
 api.add_resource(OrderList, '/orders')
 
 if __name__ == '__main__':

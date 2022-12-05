@@ -5,11 +5,11 @@ from flask_restful import Resource, reqparse
 from flask import jsonify
 from flask_jwt_extended import create_access_token, jwt_required
 from flask_jwt_extended import current_user
-from models.guest import GuestModel
+from models.reservation import ReservationModel
 import json
 
 
-class Guest(Resource):
+class Reservation(Resource):
     def __init__(self):
         pass
 
@@ -18,11 +18,11 @@ class Guest(Resource):
     parser.add_argument('password', type=str, required=True, help='This field cannot be left blank')
 
     def post(self):
-        data = Guest.parser.parse_args()
+        data = Reservation.parser.parse_args()
         username = data['username']
         password = data['password']
 
-        user = GuestModel.query.filter_by(username=username).one_or_none()
+        user = Reservation.query.filter_by(username=username).one_or_none()
         if not user or not user.check_password(password):
             return {'message': 'Wrong username or password.'}, 401
         access_token = ""

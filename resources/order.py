@@ -3,6 +3,7 @@
 from flask_restful import Resource
 from models.orders import OrderModel
 from flask_jwt_extended import jwt_required
+from util.logz import create_logger
 
 
 class Order(Resource):
@@ -10,30 +11,30 @@ class Order(Resource):
         self.logger = create_logger()
 
     @jwt_required()
-    def get(self, name):
-        Order = OrderModel.find_by_name(name)
+    def get(self, id):
+        Order = OrderModel.find_by_id(id)
         if Order:
             return Order.json()
-        return {'message': 'Order not found'}, 404
+        return {'message': 'Nie ma takiego zamówienia w bazie'}, 404
 
     @jwt_required()
-    def post(self, name):
-        if OrderModel.find_by_name(name):
-            return {'message': "A Order with name '{}' already exists.".format(name)}, 400
+    def post(self, id):
+        if OrderModel.find_by_id(id):
+            return {'message': "Zamówienie z ID: '{}' zostało już złożone.".format(id)}, 400
 
-        Order = OrderModel(name)
+        Order = OrderModel(id)
         try:
             Order.save_to_db()
         except:
-            return {"message": "An error occurred creating the Order."}, 500
+            return {"message": "Wystąpił błąd podczas składania zamówienia."}, 500
         return Order.json(), 201
 
     @jwt_required()
-    def delete(self, name):
-        Order = OrderModel.find_by_name(name)
+    def delete(self, id):
+        Order = OrderModel.find_by_id(id)
         if Order:
             Order.delete_from_db()
-        return {'message': 'Order deleted'}
+        return {'message': 'Zamówienie zostało usunięte z Bazy Danych'}
 
 
 class OrderList(Resource):
