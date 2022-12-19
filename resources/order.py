@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 
-from flask_restful import Resource
-from models.orders import OrderModel
+from flask_restful import Resource, reqparse
 from flask_jwt_extended import jwt_required
+from models.orders import OrderModel
 from util.logz import create_logger
 
 
 class Order(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('user_id', type=int, required=True)
+    parser.add_argument('delivery_date', type=int, required=True)
+
     def __init__(self):
         self.logger = create_logger()
 
@@ -26,7 +30,7 @@ class Order(Resource):
         try:
             Order.save_to_db()
         except:
-            return {"message": "Wystąpił błąd podczas składania zamówienia."}, 500
+            return {"message": "Wystąpił błąd podczas składania zamówienia."}, 500
         return Order.json(), 201
 
     @jwt_required()
@@ -35,6 +39,19 @@ class Order(Resource):
         if Order:
             Order.delete_from_db()
         return {'message': 'Zamówienie zostało usunięte z Bazy Danych'}
+
+
+    @jwt_required()
+    def put(self, id):
+        data = Order.parser.parse_args()
+        order = OrderModel.find_by_id(id)
+        if order is None:
+            order = MealModel(id, data['user_id'], data['delivery_date'])
+        else:
+            order.user_id = data['user_id']
+            order.delivery_date = data['delivery_date']
+        order.save_to_db()
+        return order.json()
 
 
 class OrderList(Resource):

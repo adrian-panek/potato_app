@@ -64,4 +64,4 @@ class Meal(Resource):
 class MealList(Resource):
     @jwt_required()
     def get(self):
-        return {'meals': [meal.json() for meal in MealModel.query.all()]}  # More pythonic
+        return {'meals': [meal.json() for meal in MealModel.query.all()]}
