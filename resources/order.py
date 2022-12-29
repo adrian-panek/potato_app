@@ -38,11 +38,11 @@ class Order(Resource):
         Order = OrderModel.find_by_id(id)
         if Order:
             Order.delete_from_db()
-        return {'message': 'Zamówienie zostało usunięte z Bazy Danych'}
+        return {'message': 'Zamówienie zostało usunięte z Bazy Danych'}, 204
 
 
     @jwt_required()
-    def put(self, id):
+    def patch(self, id):
         data = Order.parser.parse_args()
         order = OrderModel.find_by_id(id)
         if order is None:

@@ -43,10 +43,10 @@ class Meal(Resource):
         meal = MealModel.find_by_name(name)
         if meal:
             meal.delete_from_db()
-            return {'message': 'Posiłek został usunięty z bazy'}
+            return {'message': 'Posiłek został usunięty z bazy'}, 204
 
     @jwt_required()
-    def put(self, name):
+    def patch(self, name):
         data = Meal.parser.parse_args()
         meal = MealModel.find_by_name(name)
         if meal is None:
