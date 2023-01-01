@@ -2,8 +2,7 @@
 
 from flask_restful import Resource, reqparse
 from flask import jsonify
-from flask_jwt_extended import create_access_token, jwt_required
-from flask_jwt_extended import current_user
+from flask_jwt_extended import create_access_token, jwt_required, unset_jwt_cookies, current_user
 from models.user import UserModel
 from util.encoder import AlchemyEncoder
 import json
@@ -26,7 +25,6 @@ class User(Resource):
         if not user or not user.check_password(password):
             return {'message': 'Niepoprawny login lub hasło.'}, 401
         access_token = create_access_token(identity=json.dumps(user, cls=AlchemyEncoder))
-        print(access_token)
         return jsonify(access_token=access_token)
 
     @jwt_required()
@@ -36,6 +34,14 @@ class User(Resource):
             full_name=current_user.full_name,
             username=current_user.username,
         )
+
+    @jwt_required()
+    def delete(self):
+        response = jsonify(
+            {'message':"Nastapilo poprawne wylogowanie uzytkownika"}
+        ) 
+        unset_jwt_cookies(response)
+        return response
 
 
 class UserRegister(Resource):
