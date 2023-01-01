@@ -25,13 +25,13 @@ class Order(Resource):
     def post(self, id):
         if OrderModel.find_by_id(id):
             return {'message': "Zamówienie z ID: '{}' zostało już złożone.".format(id)}, 400
-
-        Order = OrderModel(id)
+        data = Order.parser.parse_args()
+        order = OrderModel(id, data['user_id'], data['delivery_date'])
         try:
-            Order.save_to_db()
+            order.save_to_db()
         except:
             return {"message": "Wystąpił błąd podczas składania zamówienia."}, 500
-        return Order.json(), 201
+        return order.json(), 201
 
     @jwt_required()
     def delete(self, id):
@@ -46,7 +46,7 @@ class Order(Resource):
         data = Order.parser.parse_args()
         order = OrderModel.find_by_id(id)
         if order is None:
-            order = MealModel(id, data['user_id'], data['delivery_date'])
+            order = OrderModel(id, data['user_id'], data['delivery_date'])
         else:
             order.user_id = data['user_id']
             order.delivery_date = data['delivery_date']

@@ -27,7 +27,6 @@ class Meal(Resource):
 
     @jwt_required()
     def post(self, name):
-        self.logger.info(f'parsed args: {Meal.parser.parse_args()}')
         if MealModel.find_by_name(name):
             return {'message': "Posiłek z nazwą: '{}' już istnieje w bazie danych.".format(name)}, 400
         data = Meal.parser.parse_args()

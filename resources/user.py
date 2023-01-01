@@ -2,8 +2,7 @@
 
 from flask_restful import Resource, reqparse
 from flask import jsonify
-from flask_jwt_extended import create_access_token, jwt_required, unset_jwt_cookies
-from flask_jwt_extended import current_user
+from flask_jwt_extended import create_access_token, jwt_required, unset_jwt_cookies, current_user
 from models.user import UserModel
 from util.encoder import AlchemyEncoder
 import json
