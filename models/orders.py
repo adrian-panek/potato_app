@@ -19,10 +19,12 @@ class OrderModel(db.Model):
         secondary=orders_to_meals,
         backref=db.backref('orders', lazy=True))
 
-    def __init__(self, id, user_id, delivery_date):
-        self.id = id
+    def __init__(self, user_id, delivery_date, meals):
         self.user_id = user_id
         self.delivery_date = delivery_date
+
+        for meal in meals:
+            self.meals.append(meal)
         
     def json(self):
         return {
