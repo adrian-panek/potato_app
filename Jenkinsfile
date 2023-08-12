@@ -7,7 +7,9 @@ pipeline {
             }
         }
         stage('Install all required dependencies'){
-            sh('pip install -r requirements.txt')
+            steps {
+                sh('pip install -r requirements.txt')
+            }
         }
     } //stages
 } //pipeline
