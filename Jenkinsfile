@@ -6,9 +6,14 @@ pipeline {
                 sh('ls -a')
             }
         }
+        stage('Update dependency manager'){
+            steps {
+                sh('pip install --upgrade pip')
+            }
+        }
         stage('Install all required dependencies'){
             steps {
-                sh('pip install -r requirements.txt')
+                sh('pip install -r requirements.txt --user')
             }
         }
     } //stages
