@@ -18,8 +18,11 @@ pipeline {
         }
         stage('Install all required dependencies'){
             steps {
-                sh('pip install -r requirements.txt --user')
+                sh('pip install -r requirements.txt')
             }
+        }
+        stage('Run static code analysis'){
+            sh("find . -type f -name "*.py" | xargs pylint --load-plugins=pylint_flask")
         }
     } //stages
 } //pipeline
