@@ -1,5 +1,10 @@
 pipeline {
-    agent { docker {image 'python'} }
+    agent { 
+        docker {
+            image 'python'
+            args '-u root:sudo -v $HOME/workspace/flask-app:/flask-app'
+        } 
+    }
     stages {
         stage('List all downloaded files'){
             steps {
