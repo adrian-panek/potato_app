@@ -22,7 +22,7 @@ pipeline {
             }
         }
         stage('Run static code analysis'){
-            sh("find . -type f -name "*.py" | xargs pylint --load-plugins=pylint_flask")
+            sh('find . -type f -name "*.py" | xargs pylint --load-plugins=pylint_flask')
         }
     } //stages
 } //pipeline
