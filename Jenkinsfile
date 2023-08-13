@@ -31,5 +31,11 @@ pipeline {
                 sh('pytest')
             }
         }
+        stage('Build docker image'){
+            agent any
+            steps {
+                sh('docker build -t adrianpanek/flask-app:latest')
+            }
+        }
     } //stages
 } //pipeline
