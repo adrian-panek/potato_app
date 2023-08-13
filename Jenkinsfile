@@ -34,7 +34,7 @@ pipeline {
         stage('Build docker image'){
             agent any
             steps {
-                sh('docker build -t adrianpanek/flask-app:latest')
+                sh('docker build . -t adrianpanek/python-app:latest')
             }
         }
     } //stages
