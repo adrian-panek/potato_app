@@ -32,7 +32,6 @@ pipeline {
             }
         }
         stage('Build docker image'){
-            agent any
             steps {
                 sh('docker build . -t adrianpanek/python-app:latest')
             }
