@@ -2,4 +2,4 @@ __pycache__
 venv
 __init__.py
 data.db
-simple_jsons.odt
+.pytest_cache
