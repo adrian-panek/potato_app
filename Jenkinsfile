@@ -26,5 +26,10 @@ pipeline {
                 sh('find . -type f -name "*.py" | xargs pylint -E --load-plugins=pylint_flask | tee pylint.log')
             }
         }
+        stage('Run tests'){
+            steps {
+                sh('pytest')
+            }
+        }
     } //stages
 } //pipeline
