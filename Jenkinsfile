@@ -33,7 +33,7 @@ pipeline {
         }
         stage('Build docker image'){
             steps {
-                sh('docker build . -t adrianpanek/python-app:latest')
+                sh('docker build Dockerfile -t adrianpanek/python-app:latest')
             }
         }
     } //stages
