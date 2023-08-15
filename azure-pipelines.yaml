@@ -1,0 +1,52 @@
+# Python package
+# Create and test a Python package on multiple Python versions.
+# Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/python
+
+trigger:
+- azure-devops
+
+pool: default
+strategy:
+  matrix:
+    Python310:
+      python.version: '3.10'
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '$(python.version)'
+  displayName: 'Use Python $(python.version)'
+
+- script: |
+    ls -a
+  displayName: 'List all downloaded files'
+
+- script: |
+    cat requirements.txt | xargs pip uninstall -y
+  displayName: 'Cleanup previous pip installation'
+
+- script: |
+    docker rmi adrianpanek/python-app:latest  
+  displayName: 'Cleanup previous Docker image build'
+
+- script: |
+    python -m pip install --upgrade pip
+  displayName: 'Update dependency manager'
+
+- script: |
+    pip install -r requirements.txt
+  displayName: 'Install all required dependencies'
+
+- script: |
+    find . -type f -name "*.py" | xargs pylint -E --load-plugins=pylint_flask | tee pylint.log
+  displayName: 'Run static code analysis'
+
+- script: |
+    pip install pytest pytest-azurepipelines
+    pytest
+  displayName: 'Run tests'
+
+- script: |
+    docker build . -t adrianpanek/python-app:latest
+  displayName: 'Build docker image'
