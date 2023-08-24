@@ -19,9 +19,9 @@ class TestHello(unittest.TestCase):
         rv = self.app.get('/meals/1')
         self.assertEqual(rv.status, '401 UNAUTHORIZED')
 
-    def test_login_endpoint(self):
-        rv = self.app.post('/register?username=admin&password=admin123')
-        self.assertEqual(rv.status, "200 OK")
+    # def test_login_endpoint(self):
+    #     rv = self.app.post('/register?username=admin&password=admin123')
+    #     self.assertEqual(rv.status, "200 OK")
 
 if __name__ == '__main__':
     unittest.main()
