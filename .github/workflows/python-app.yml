@@ -3,9 +3,7 @@
 
 name: Python application
 
-on:
-  push:
-    branches: [ "github-actions" ]
+on: workflow_dispatch
 
 permissions:
   contents: read
